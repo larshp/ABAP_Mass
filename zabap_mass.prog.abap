@@ -2,8 +2,9 @@ REPORT zabap_mass.
 
 DATA: gt_objects TYPE TABLE OF dwinactiv.
 
-PARAMETERS: p_devc TYPE devclass OBLIGATORY,
-            p_cnt  TYPE i DEFAULT 2 OBLIGATORY.
+PARAMETERS: p_devc  TYPE devclass OBLIGATORY,
+            p_cnt   TYPE i DEFAULT 2 OBLIGATORY,
+            p_start TYPE i.
 
 START-OF-SELECTION.
   PERFORM run.
@@ -68,7 +69,7 @@ FORM create_domain USING p_counter TYPE i.
         ls_object TYPE ddenqs.
 
 
-  lv_num = p_counter.
+  lv_num = p_counter + p_start.
   lv_name = |ZMASS{ lv_num }|.
 
   ls_object-objtype = 'DOMA'.

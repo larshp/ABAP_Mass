@@ -54,8 +54,15 @@
      <ID>S</ID>
      <KEY>P_DEVC</KEY>
      <ENTRY>.</ENTRY>
-     <LENGTH>9</LENGTH>
+     <LENGTH>15</LENGTH>
      <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_START</KEY>
+     <ENTRY>Start</ENTRY>
+     <LENGTH>13</LENGTH>
+     <SPLIT/>
     </item>
    </TPOOL>
   </asx:values>
