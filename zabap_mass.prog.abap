@@ -13,6 +13,12 @@ FORM run.
   ASSERT p_cnt > 0.
 
   DO p_cnt TIMES.
+    cl_progress_indicator=>progress_indicate(
+        i_text               = 'Creating'
+        i_processed          = sy-index
+        i_total              = p_cnt
+        i_output_immediately = abap_true ).
+
     PERFORM create_domain USING sy-index.
     COMMIT WORK.
   ENDDO.
@@ -57,11 +63,13 @@ FORM create_domain USING p_counter TYPE i.
 
   DATA: lv_name   TYPE ddobjname,
         ls_dd01v  TYPE dd01v,
+        lv_num    TYPE n LENGTH 5,
         lt_dd07v  TYPE TABLE OF dd07v,
         ls_object TYPE ddenqs.
 
 
-  lv_name = |ZMASS{ p_counter }|.
+  lv_num = p_counter.
+  lv_name = |ZMASS{ lv_num }|.
 
   ls_object-objtype = 'DOMA'.
   ls_object-objname = lv_name.
