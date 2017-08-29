@@ -6,6 +6,9 @@ PARAMETERS: p_devc  TYPE devclass OBLIGATORY,
             p_cnt   TYPE i DEFAULT 2 OBLIGATORY,
             p_start TYPE i.
 
+PARAMETERS: p_doma TYPE c RADIOBUTTON GROUP g1 DEFAULT 'X',
+            p_clas TYPE c RADIOBUTTON GROUP g1.
+
 START-OF-SELECTION.
   PERFORM run.
 
@@ -20,7 +23,14 @@ FORM run.
         i_total              = p_cnt
         i_output_immediately = abap_true ).
 
-    PERFORM create_domain USING sy-index.
+    CASE abap_true.
+      WHEN p_doma.
+        PERFORM create_domain USING sy-index.
+      WHEN p_clas.
+        PERFORM create_class USING sy-index.
+      WHEN OTHERS.
+        ASSERT 0 = 1.
+    ENDCASE.
     COMMIT WORK.
   ENDDO.
 
@@ -112,5 +122,43 @@ FORM create_domain USING p_counter TYPE i.
   APPEND INITIAL LINE TO gt_objects ASSIGNING FIELD-SYMBOL(<ls_obj>).
   <ls_obj>-object = 'DOMA'.
   <ls_obj>-obj_name = lv_name.
+
+ENDFORM.
+
+FORM create_class USING p_counter TYPE i.
+
+  DATA: lv_num       TYPE n LENGTH 5,
+        ls_vseoclass TYPE vseoclass.
+
+
+  lv_num = p_counter + p_start.
+
+  ls_vseoclass-clsname   = |ZCL_MASS{ lv_num }|.
+  ls_vseoclass-version   = '1'.
+  ls_vseoclass-langu     = sy-langu.
+  ls_vseoclass-descript  = 'foobar'.
+  ls_vseoclass-exposure  = '2'.
+  ls_vseoclass-state     = '1'.
+  ls_vseoclass-clsfinal  = abap_true.
+  ls_vseoclass-clsccincl = abap_true.
+  ls_vseoclass-fixpt     = abap_true.
+  ls_vseoclass-unicode   = abap_true.
+
+  CALL FUNCTION 'SEO_CLASS_CREATE_COMPLETE'
+    EXPORTING
+      devclass        = p_devc
+    CHANGING
+      class           = ls_vseoclass
+    EXCEPTIONS
+      existing        = 1
+      is_interface    = 2
+      db_error        = 3
+      component_error = 4
+      no_access       = 5
+      other           = 6
+      OTHERS          = 7.
+  ASSERT sy-subrc = 0.
+
+* todo, activation of CLAS
 
 ENDFORM.

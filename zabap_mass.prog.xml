@@ -19,6 +19,12 @@
     </item>
     <item>
      <ID>S</ID>
+     <KEY>P_CLAS</KEY>
+     <ENTRY>Classes</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
      <KEY>P_CNT</KEY>
      <ENTRY>Count</ENTRY>
      <LENGTH>13</LENGTH>
@@ -29,6 +35,12 @@
      <ENTRY>.</ENTRY>
      <LENGTH>15</LENGTH>
      <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_DOMA</KEY>
+     <ENTRY>Domains</ENTRY>
+     <LENGTH>15</LENGTH>
     </item>
     <item>
      <ID>S</ID>
