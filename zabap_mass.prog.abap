@@ -41,9 +41,17 @@ ENDFORM.
 
 FORM activate.
 
+  DATA: lv_ddic TYPE abap_bool.
+
+  CASE abap_true.
+    WHEN p_doma.
+      lv_ddic = abap_true.
+      ASSERT 0 = 1.
+  ENDCASE.
+
   CALL FUNCTION 'RS_WORKING_OBJECTS_ACTIVATE'
     EXPORTING
-      activate_ddic_objects  = abap_true
+      activate_ddic_objects  = lv_ddic
       with_popup             = abap_true
     TABLES
       objects                = gt_objects
@@ -159,6 +167,8 @@ FORM create_class USING p_counter TYPE i.
       OTHERS          = 7.
   ASSERT sy-subrc = 0.
 
-* todo, activation of CLAS
+  APPEND INITIAL LINE TO gt_objects ASSIGNING FIELD-SYMBOL(<ls_obj>).
+  <ls_obj>-object = 'CLAS'.
+  <ls_obj>-obj_name = ls_vseoclass-clsname.
 
 ENDFORM.
