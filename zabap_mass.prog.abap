@@ -16,9 +16,11 @@ FORM run.
 
   ASSERT p_cnt > 0.
 
+  CLEAR gt_objects.
+
   DO p_cnt TIMES.
     cl_progress_indicator=>progress_indicate(
-        i_text               = 'Creating'
+        i_text               = |Creating { sy-index }/{ p_cnt }|
         i_processed          = sy-index
         i_total              = p_cnt
         i_output_immediately = abap_true ).
