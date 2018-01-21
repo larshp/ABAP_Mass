@@ -48,6 +48,7 @@ FORM activate.
   CASE abap_true.
     WHEN p_doma.
       lv_ddic = abap_true.
+    WHEN OTHERS.
       ASSERT 0 = 1.
   ENDCASE.
 
